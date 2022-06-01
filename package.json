@@ -1,0 +1,16 @@
+{
+  "name": "Kosaraju",
+  "version": "1.0.0",
+  "description": "kosaraju",
+  "main": "kosaraju.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node kosaraju.js"
+  },
+  "author": "sr",
+  "license": "ISC",
+  "dependencies": {
+    "util": "^0.12.4"
+  }
+}
