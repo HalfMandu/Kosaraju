@@ -8,7 +8,9 @@
 *		node --stack-size=32000 '.\kosaraju.js'
 */
 
-const { Graph } = require('./Graph.js');
+import { Graph } from "./Graph.js";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Main
@@ -24,7 +26,7 @@ const sccSizes = {};	//maps leader verts to their SCC size
 const dfsFinishingTimes = (graph) => {
 		
 	//try each point seperately, work downwards from nth element...
-	for (let vert of [...graph.vertices.keys()].sort().reverse()){
+	for (const vert of [...graph.vertices.keys()].sort().reverse()){
 		if (!explored[vert]){
 			dfsFirst(graph, vert);	//recurse
 		}
@@ -40,7 +42,7 @@ const dfsFirst = async (graph, vert) => {
 	explored[vert] = true;
 	
 	//check all outbound edges from vert
-	for (let neighbor of graph.vertices.get(vert)) {  
+	for (const neighbor of graph.vertices.get(vert)) {  
 		if (!explored[neighbor]){
 			dfsFirst(graph, neighbor);
 		}
@@ -58,13 +60,13 @@ const dfsSccLeaders = (graph) => {
 	explored = {};		//reset explored map
 	
 	//process verts based on their finishing times - back to front
-	for (let vert of Object.values(finishTimes).sort().reverse()){
+	for (const vert of Object.values(finishTimes).sort().reverse()){
 			
 		explored[vert] = true;	  //discover node
 		source = vert; 			  //reset the new source vertex  
 		
 		//check all outbound edges from vert
-		for (let neighbor of graph.vertices.get(vert.toString())) {  
+		for (const neighbor of graph.vertices.get(vert.toString())) {  
 			if (!explored[neighbor]){
 				dfsSecond(graph, neighbor, source);
 			}
@@ -78,7 +80,7 @@ const dfsSecond = async (graph, vert, source) => {
 	explored[vert] = true;
 	
 	//check all outbound edges from vert
-	for (let neighbor of graph.vertices.get(vert)) {  
+	for (const neighbor of graph.vertices.get(vert)) {  
 		if (!explored[neighbor]){
 			dfsSecond(graph, neighbor, source);
 		}
@@ -110,7 +112,7 @@ const getGraphFromFile = async (sccFile) => {
 
 		if (!line) { return null; }
 				
-		let [v1, v2] = line.toString().split(' ');  
+		const [v1, v2] = line.toString().split(' ');  
 		
 		//excluding self loops
 		if (v1 != v2) {
@@ -128,8 +130,8 @@ const replaceLabels = (graph) => {
 	const leaderGraph = new Graph("DIRECTED");
 	
 	//replace vertices with their finishing times
-	for (let [vert] of graph.vertices){
-		for (let neighbor of graph.vertices.get(vert)){
+	for (const [vert] of graph.vertices){
+		for (const neighbor of graph.vertices.get(vert)){
 			leaderGraph.addEdge(finishTimes[vert].toString(), finishTimes[neighbor].toString());
 		}
 	}
@@ -142,7 +144,7 @@ const replaceLabels = (graph) => {
 const sortLeaders = () => {
 
 	const leadersSorted = [];
-	for (let leader in sccSizes) {
+	for (const leader in sccSizes) {
 		leadersSorted.push([leader, sccSizes[leader]]);
 	}
 
@@ -151,8 +153,8 @@ const sortLeaders = () => {
 	console.log("leadersSorted: ");
 	console.log(leadersSorted);
 	
-	let topSccSizes = [];
-	for (let [leader, sccSize] of Object.values(leadersSorted)) {
+	const topSccSizes = [];
+	for (const [leader, sccSize] of Object.values(leadersSorted)) {
 		topSccSizes.push(sccSize);
 	}
 	

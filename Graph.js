@@ -5,8 +5,10 @@
 *	This Graph implementation uses a map to associate int keys with vertice arrays
 */
 
-const Queue = require('./Queue');
-const Stack = require('./Stack');
+
+import { Queue } from "./Queue.js";
+import { Stack } from "./Stack.js";
+
 
 class Graph {
 	
@@ -257,8 +259,7 @@ graphReversed.printGraph();
  */
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-//export { Graph };
-module.exports = { Graph };
+export { Graph };
 
 
 

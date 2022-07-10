@@ -27,5 +27,5 @@ class Stack {
 
 }
 
-//export { Stack };
-module.exports = { Stack };
+export { Stack };
+//module.exports = { Stack };

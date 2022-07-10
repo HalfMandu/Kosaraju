@@ -6,9 +6,11 @@
 		Uses Stack to carry out the exploration.
 */
 
+import { Graph } from "./Graph.js";
+import { Stack } from "./Stack.js";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { performance } = require('perf_hooks');
-const { Graph } = require('./Graph.js');
-const { Stack } = require('./Stack');
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Main
@@ -123,7 +125,7 @@ const getGraphFromFile = async (sccFile) => {
 
 		if (!line) { return null; }
 				
-		let [v1, v2] = line.toString().split(' ');  
+		const [v1, v2] = line.toString().split(' ');  
 		
 		//excluding self loops
 		if (v1 != v2) {
