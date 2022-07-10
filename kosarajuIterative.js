@@ -27,7 +27,7 @@ class KosarajuIterative {
 		let finished = {};
 		
 		//try each point seperately, work downwards from nth element...
-		for (let vert of [...this.graph.vertices.keys()].sort().reverse()){
+		for (const vert of [...this.graph.vertices.keys()].sort().reverse()){
 			if (!explored[vert]){
 				this.dfsFinishTimes(vert, explored, finished);	
 			}
@@ -45,11 +45,11 @@ class KosarajuIterative {
 		
 		//take a vert, explore it, then add its neighbors to the stack
  		while (!stack.isEmpty()) {
-			let vert = stack.pop();
+			const vert = stack.pop();
 			if (!explored[vert]){
 				explored[vert] = true;
 				stack.push(vert);
-				for (let neighbor of this.graph.vertices.get(vert)){
+				for (const neighbor of this.graph.vertices.get(vert)){
 					stack.push(neighbor);
 				}
 			} else {
@@ -65,14 +65,14 @@ class KosarajuIterative {
 	//Second DFS - peel off SCC's and note their sizes
 	getSccLeaders = () => {
 		
-		let explored = {};   //boolean explored status of a given vert
-		let sccs = [];  	 //2D array, a list of SCC's
-		let sccSizes = [];	 //a list of known scc sizes
+		let explored = {};  	 //boolean explored status of a given vert
+		const sccs = [];  	 	 //2D array, a list of SCC's
+		const sccSizes = [];	 //a list of known scc sizes
 		
 		//proccess nodes based on decreasing finishing times
-		for (let vert of this.finishTimes.reverse()){
+		for (const vert of this.finishTimes.reverse()){
 			if (!explored[vert]){
-				let scc = [];  	//all verts seen onward here should be added as members to the leader's scc
+				const scc = [];  	//all verts seen onward here should be added to the leader's scc
 				this.peelOffScc(vert, explored, scc);   //from here, visit all possible verts
 				sccs.push(scc);							
 				sccSizes.push(scc.length);
@@ -96,8 +96,8 @@ class KosarajuIterative {
 		
 		//DFS - take a vert, explore it, then add its neighbors to the stack
 		while (!stack.isEmpty()) {
-			let vert = stack.pop();
-				for (let neighbor of this.graph.vertices.get(vert)){
+			const vert = stack.pop();
+				for (const neighbor of this.graph.vertices.get(vert)){
 					if (!explored[neighbor]){
 						explored[neighbor] = true;
 						scc.push(neighbor);
@@ -141,9 +141,9 @@ const getGraphFromFile = async (sccFile) => {
 console.log("Starting Kosaraju (iterative)...");
 
 //Fetch file
-getGraphFromFile('./data/SCC_small.txt').then((graph) => {
+getGraphFromFile('./SCC_small.txt').then((graph) => {
 
-	let startTime = performance.now();
+	const startTime = performance.now();
 	
 	const kosaraju = new KosarajuIterative(graph);
 	
@@ -159,8 +159,8 @@ getGraphFromFile('./data/SCC_small.txt').then((graph) => {
 	console.log("DFS second pass... ");
 	kosaraju.getSccLeaders();
 	
-	let endTime = performance.now();
-	let runDuration = (endTime/1000) - (startTime/1000);
+	const endTime = performance.now();
+	const runDuration = (endTime/1000) - (startTime/1000);
 	
 	console.log("Kosaraju took " + runDuration.toFixed(2) + " seconds");  // ~9 seconds
 

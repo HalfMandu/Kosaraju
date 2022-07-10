@@ -49,8 +49,8 @@ class Graph {
 		if (this.vertices.has(v)){
 			
 			//go through each of its neighbors' lists and remove their ref to it
-			for (let neighbor of this.vertices.get(v)){
-				this.vertices.get(neighbor).splice(this.vertices.get(neighbor).indexOf(v), 1); 
+			for (const neighbor of this.vertices.get(v)){
+				this.vertices.get(neighbor).splice(neighbor.indexOf(v), 1); 
 			}
 			
 			//finally, delete obsolete v
@@ -86,7 +86,7 @@ class Graph {
 		//keep discovering vertices until queue is empty
 		while (!exploreQueue.isEmpty()) {
 			//loop through the lists and add a vertex to the queue if it is not explored yet
-			for (let neighbor of this.vertices.get(exploreQueue.dequeue())){
+			for (const neighbor of this.vertices.get(exploreQueue.dequeue())){
 				if (!explored[neighbor]){
 					explored[neighbor] = true;
 					exploreQueue.enqueue(neighbor);
@@ -103,7 +103,7 @@ class Graph {
 		explored[start] = true;
 		console.log(start);
 		
-		for (let neighbor of this.vertices.get(start)){
+		for (const neighbor of this.vertices.get(start)){
 			if (!explored[neighbor]){
 				explored[neighbor] = true;
 				this.dfs(neighbor, explored);
@@ -119,11 +119,11 @@ class Graph {
 		exploreStack.push(start);
 		
 		while (!exploreStack.isEmpty()) {
-			let nextVert = exploreStack.pop();
+			const nextVert = exploreStack.pop();
 			if (!explored[nextVert]){
 				explored[nextVert] = true;
 				console.log(nextVert);
-				for (let neighbor of this.vertices.get(nextVert)){
+				for (const neighbor of this.vertices.get(nextVert)){
 					exploreStack.push(neighbor);
 				}
 			}
@@ -136,10 +136,10 @@ class Graph {
 		//visit this vert
 		explored[vertex] = true;
 	   	
-		let neighbors = this.vertices.get(vertex);
+		const neighbors = this.vertices.get(vertex);
 		
 		//check each neighbor -- if they aren't explored, recurse on them and update vert counter
-		for (let neighbor of this.vertices.get(vertex)){
+		for (const neighbor of this.vertices.get(vertex)){
 			if (!explored[neighbor]) {
 				numVerts = this.topSortRecurser(neighbor, numVerts, explored, order);
 			}
@@ -155,10 +155,10 @@ class Graph {
 	
 		let explored = {};		//keeps track of which verts have been visited
 		let order = {};			//object tracking vertices to their final order position
-		let numVerts = this.vertices.size;
+		const numVerts = this.vertices.size;
 				
 		//For every unvisited vertex, explore it and neighors
-		for (let [vertex] of this.vertices){	
+		for (const [vertex] of this.vertices){	
 			if (!explored[vertex]) {
 				this.topSortRecurser(vertex, numVerts, explored, order);
 			}
@@ -172,7 +172,7 @@ class Graph {
 	
 		const graphReversed = new Graph(this.graphType);
 		
-		for (let [vertex] of this.vertices){
+		for (const [vertex] of this.vertices){
 			this.vertices.get(vertex).forEach(neighbor => {
 				graphReversed.addEdge(neighbor, vertex);
 			});
@@ -192,7 +192,7 @@ class Graph {
 	printGraph() {
 		console.log(this.graphType + " GRAPH: ");
 		//extract key/vals and display them
-		for (let [vertex, neighbors] of this.vertices){
+		for (const [vertex, neighbors] of this.vertices){
 			console.log(vertex, neighbors);
 		}
 	};

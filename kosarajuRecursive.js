@@ -184,7 +184,7 @@ const sortLeaders = () => {
 console.log("Starting Kosaraju...");
 
 //Fetch file
-getGraphFromFile('./data/SCC_small.txt').then((graph) => {
+getGraphFromFile('./SCC_small.txt').then((graph) => {
 
 	console.log("Reversing graph... ");
 	graph.reverse();
